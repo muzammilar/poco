@@ -1584,12 +1584,19 @@ void DataTest::testSQLChannel()
 		}
 	}
 
+	assertEqual(int(SQLChannel::DEFAULT_FLUSH_SECONDS), NumberParser::parse(pChannel->getProperty("flush")));
+
 	constexpr int mcount{10};
 	constexpr int batch{3};
 	pChannel->setProperty("minBatch", std::to_string(batch));
 	constexpr int flush{1};
 	pChannel->setProperty("flush", std::to_string(flush));
 	assertEqual(flush, NumberParser::parse(pChannel->getProperty("flush")));
+	assertTrue(pChannel->getProperty("times") == "UTC");
+	pChannel->setProperty("times", "local");
+	assertTrue(pChannel->getProperty("times") == "local");
+	pChannel->setProperty("times", "UTC");
+	assertTrue(pChannel->getProperty("times") == "UTC");
 	for (int i = 0; i < mcount; i++)
 	{
 		Message msgInfA("InformationSource", Poco::format("%d Informational sync message", i), Message::PRIO_INFORMATION);
