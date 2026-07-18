@@ -33,3 +33,6 @@ src/random_getrandom.c
 src/random_getrandom.h
 src/random_rand_s.c
 src/random_rand_s.h
+src/fallthrough.h
+src/memory_sanitizer.h
+src/xcsinc.c
